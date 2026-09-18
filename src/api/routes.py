@@ -1,16 +1,27 @@
+import requests
 from pathlib import Path
-from fastapi import APIRouter, HTTPException, UploadFile, File, status
+from fastapi import APIRouter, HTTPException, UploadFile, File, status, Query
 from src.api.models import (
     HealthResponse,
     QueryRequest,
     QueryResponse,
     IngestResponse,
     DocumentListResponse,
-    DocumentItem
+    DocumentItem,
+    DeleteDocumentResponse,
+    QueryHistoryResponse,
+    QueryHistoryItem,
+    EvaluationReport,
+    BenchmarkDatasetResponse,
+    TestCaseRequest,
+    TestCaseResult
 )
 from src.ingestion.ingest import IngestionPipeline
 from src.ai.vector_store import VectorStoreManager
+from src.ai.retriever import ServiceKnowledgeRetriever
 from src.ai.rag import RAGPipeline
+from src.ai.evaluation import BENCHMARK_DATASET, evaluate_single_test_case, run_rag_evaluation
+from src.utils.history import QueryHistoryManager
 from src.utils.config import settings
 from src.utils.logging_config import setup_logger
 
@@ -18,24 +29,45 @@ logger = setup_logger("api_routes")
 
 router = APIRouter()
 
-# Global instances (lazy initialized)
+# Global instances — single VectorStoreManager shared across ALL components
 vector_store_manager = VectorStoreManager()
 ingestion_pipeline = IngestionPipeline(vector_store_manager=vector_store_manager)
-rag_pipeline = RAGPipeline()
+_shared_retriever = ServiceKnowledgeRetriever(vector_store_manager=vector_store_manager)
+rag_pipeline = RAGPipeline(retriever=_shared_retriever)
+history_manager = QueryHistoryManager()
 
 
-@router.get("/health", response_model=HealthResponse, summary="Health Check")
+@router.get("/health", response_model=HealthResponse, summary="Enhanced Health & Component Monitoring")
 def health_check():
-    """Returns the operational status of the API service."""
-    vector_status = "ready" if vector_store_manager.vector_store is not None else "no_index"
+    """Returns live structured health and operational status for API, Vector Store, Embeddings, and Ollama connection."""
+    vector_status = "ready" if vector_store_manager.vector_store is not None and vector_store_manager.get_total_chunks_count() > 0 else "no_index"
+    doc_info = vector_store_manager.get_indexed_documents_info()
+    docs_count = len(doc_info)
+    chunks_count = vector_store_manager.get_total_chunks_count()
+
+    embeddings_status = "ready" if vector_store_manager.embeddings is not None else "unavailable"
+
+    ollama_status = "disconnected"
+    try:
+        res = requests.get(f"{settings.OLLAMA_BASE_URL}/api/tags", timeout=2)
+        if res.status_code == 200:
+            ollama_status = "connected"
+    except Exception:
+        ollama_status = "disconnected"
+
     return HealthResponse(
         status="ok",
-        ollama_model=settings.OLLAMA_MODEL,
-        vector_store_status=vector_status
+        api="healthy",
+        vector_store=vector_status,
+        embeddings=embeddings_status,
+        ollama=ollama_status,
+        llm=settings.OLLAMA_MODEL,
+        documents_count=docs_count,
+        chunks_count=chunks_count
     )
 
 
-@router.post("/ingest", response_model=IngestResponse, summary="Trigger Document Ingestion")
+@router.post("/ingest", response_model=IngestResponse, summary="Trigger Knowledge Base Ingestion")
 def ingest_documents():
     """Ingests all files from the sample data directory into the vector store."""
     try:
@@ -54,9 +86,9 @@ def ingest_documents():
         )
 
 
-@router.post("/upload", response_model=IngestResponse, summary="Upload and Ingest Document")
+@router.post("/upload", response_model=IngestResponse, summary="Upload & Ingest Multi-Format Document")
 async def upload_document(file: UploadFile = File(...)):
-    """Uploads a PDF, TXT, or DOCX document, saves it to data/uploads, and indexes it."""
+    """Uploads a PDF, TXT, DOCX, or CSV document, saves it to data/uploads, and indexes it."""
     allowed_extensions = {".pdf", ".txt", ".docx", ".csv"}
     filename = file.filename
     ext = Path(filename).suffix.lower()
@@ -68,18 +100,15 @@ async def upload_document(file: UploadFile = File(...)):
         )
 
     try:
-        # Sanitize filename
         safe_name = Path(filename).name
         target_path = settings.DATA_UPLOAD_DIR / safe_name
 
-        # Save uploaded file
         with open(target_path, "wb") as f:
             content = await file.read()
             f.write(content)
 
         logger.info(f"Saved uploaded file to {target_path}")
 
-        # Ingest single file
         result = ingestion_pipeline.ingest_single_file(target_path)
         return IngestResponse(
             status=result["status"],
@@ -95,9 +124,9 @@ async def upload_document(file: UploadFile = File(...)):
         )
 
 
-@router.post("/query", response_model=QueryResponse, summary="Query BMW Service Documentation RAG")
+@router.post("/query", response_model=QueryResponse, summary="Query BMW Service Knowledge RAG")
 def query_rag(request: QueryRequest):
-    """Submits a technical question to the RAG pipeline and returns a grounded answer with sources."""
+    """Submits a technical question to the RAG pipeline and returns a grounded answer with deduplicated sources."""
     question = request.question.strip()
     if not question:
         raise HTTPException(
@@ -106,7 +135,11 @@ def query_rag(request: QueryRequest):
         )
 
     try:
-        response = rag_pipeline.answer_question(question)
+        response = rag_pipeline.answer_question(
+            question=question,
+            top_k=request.top_k,
+            similarity_threshold=request.similarity_threshold
+        )
         return QueryResponse(
             question=response["question"],
             answer=response["answer"],
@@ -135,4 +168,94 @@ def list_documents():
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to retrieve document metadata: {str(e)}"
+        )
+
+
+@router.delete("/documents/{filename}", response_model=DeleteDocumentResponse, summary="Delete Document & Rebuild Vector Store")
+def delete_document(filename: str):
+    """Deletes a document and rebuilds the FAISS vector index safely."""
+    try:
+        success, chunks_removed, target_filename = vector_store_manager.delete_document(filename)
+        if not success or chunks_removed == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Document '{filename}' not found in vector store."
+            )
+        return DeleteDocumentResponse(
+            status="success",
+            message=f"Document '{target_filename}' deleted successfully.",
+            document=target_filename,
+            chunks_removed=chunks_removed
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting document {filename}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete document: {str(e)}"
+        )
+
+
+@router.get("/history", response_model=QueryHistoryResponse, summary="Retrieve Local Query History")
+def get_query_history(limit: int = Query(50, ge=1, le=100)):
+    """Returns recent technician query execution history."""
+    try:
+        history = history_manager.get_history(limit=limit)
+        items = [QueryHistoryItem(**item) for item in history]
+        return QueryHistoryResponse(
+            history=items,
+            total_records=len(items)
+        )
+    except Exception as e:
+        logger.error(f"Error fetching query history: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch query history: {str(e)}"
+        )
+
+
+@router.get("/evaluate/dataset", response_model=BenchmarkDatasetResponse, summary="Retrieve Evaluation Benchmark Dataset")
+def get_evaluation_dataset():
+    """Returns the list of benchmark dataset test case definitions."""
+    return BenchmarkDatasetResponse(dataset=BENCHMARK_DATASET)
+
+
+@router.post("/evaluate/test-case", response_model=TestCaseResult, summary="Evaluate Single Benchmark Test Case")
+def evaluate_test_case(request: TestCaseRequest):
+    """Evaluates a single benchmark test case through the production RAG pipeline with per-item error handling."""
+    try:
+        test_case_dict = request.dict()
+        res = evaluate_single_test_case(test_case_dict, rag_pipeline=rag_pipeline)
+        return TestCaseResult(**res)
+    except Exception as e:
+        logger.error(f"Error evaluating test case {request.id}: {e}")
+        return TestCaseResult(
+            id=request.id,
+            question=request.question,
+            expected_document=request.expected_document or "N/A",
+            retrieved_documents=[],
+            retrieval_success=False,
+            number_of_sources=0,
+            answer_generated=f"ERROR: {str(e)}",
+            fallback_expected=request.expect_fallback,
+            fallback_returned=False,
+            status="ERROR",
+            passed=False,
+            error=str(e),
+            evaluation_note=f"API handler error: {str(e)}"
+        )
+
+
+@router.get("/evaluate", response_model=EvaluationReport, summary="Run Full RAG Evaluation Benchmark Suite")
+def evaluate_rag():
+    """Executes automated evaluation benchmark test suite against current RAG system."""
+    try:
+        report = run_rag_evaluation(rag_pipeline=rag_pipeline)
+        return EvaluationReport(**report)
+    except Exception as e:
+        logger.error(f"Error running RAG evaluation: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Evaluation failed: {str(e)}"
         )

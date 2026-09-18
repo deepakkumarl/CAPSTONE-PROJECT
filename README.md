@@ -8,22 +8,20 @@ An enterprise-grade, end-to-end Retrieval-Augmented Generation (RAG) capstone pr
 
 ## Overview
 
-The **BMW Service Knowledge RAG** system bridges technical service documentation and master mechanics. It automates text extraction, clean chunking, dense vector indexing, threshold-validated similarity retrieval, and strict grounded answer generation. All processing runs 100% locally on standard developer hardware with zero external API costs or data privacy egress.
-
----
-
-## Problem Statement
-
-BMW service technicians face tight repair timelines and must quickly consult complex service manuals, technical bulletins, and fault code matrices. Generic LLMs tend to introduce hallucinations, invent torque specifications, or suggest invalid procedures. This system enforces strict pre-retrieval validation:
-- **Retrieves relevant service documentation BEFORE generating any answer.**
-- **Enforces zero outside knowledge usage.**
-- **If documentation is insufficient, explicitly states:**
+The **BMW Service Knowledge RAG** platform bridges technical service documentation and master mechanics. It features:
+- **Multi-Tab Streamlit Technician Interface**: Diagnostic Assistant, Knowledge Base Dashboard, Query History, and RAG Evaluation Benchmark.
+- **Strict Grounding & Anti-Hallucination**: Answers are derived ONLY from retrieved context. If information is missing, the assistant outputs:
   > *"I could not find sufficient information in the available BMW service documentation."*
+- **Source Deduplication**: Duplicate source citations from identical document pages are automatically deduplicated.
+- **Document Management**: Supports PDF, TXT, DOCX, and CSV formats with duplicate ingestion prevention and document deletion with vector store index rebuilding.
+- **Local Query History & Evaluation Suite**: Records recent queries and provides automated RAG benchmark evaluation reports.
+- **100% Privacy & Local Execution**: All embeddings (`sentence-transformers/all-MiniLM-L6-v2`) and LLM generation (`qwen2.5:1.5b` via Ollama) run locally with zero API costs.
 
 ---
 
-## Architecture
+## Architecture Flow
 
+### Ingestion Pipeline Flow:
 ```
 BMW Service Documents (PDF, TXT, DOCX, CSV)
                   │
@@ -40,19 +38,32 @@ BMW Service Documents (PDF, TXT, DOCX, CSV)
 Local SentenceTransformers (all-MiniLM-L6-v2)
                   │
                   ▼
-         FAISS Vector Store
-                  │
-                  ▼
-         Retriever (Threshold 0.35)
-                  │
-                  ▼
-       LangChain RAG Pipeline ──► Ollama (qwen2.5:1.5b)
-                  │
-                  ▼
-       FastAPI Backend Server
-                  │
-                  ▼
-       Streamlit Frontend UI
+    FAISS Vector Store Persistence
+```
+
+### Retrieval & Diagnostic Query Flow:
+```
+Technician Question ──► Streamlit UI ──► FastAPI Backend
+                                             │
+                                             ▼
+                                  FAISS Top-K Search
+                                             │
+                                             ▼
+                                Relevant Source Deduplication
+                                             │
+                                             ▼
+                                  Relevance Threshold Check
+                                  │                       │
+                               (Pass)                   (Fail)
+                                  │                       │
+                                  ▼                       ▼
+                     Strict Grounding Prompt       Fallback Answer
+                                  │
+                                  ▼
+                         Ollama (qwen2.5:1.5b)
+                                  │
+                                  ▼
+                         Grounded Answer + Sources ──► Streamlit UI
 ```
 
 ---
@@ -66,6 +77,7 @@ Local SentenceTransformers (all-MiniLM-L6-v2)
 - **Embedding Model**: `sentence-transformers/all-MiniLM-L6-v2` (Local HuggingFace)
 - **Local LLM**: Ollama with `qwen2.5:1.5b`
 - **Document Processing**: PyPDF (`pypdf`), `python-docx`, plain text, CSV
+- **Query History & Evaluation**: Local JSON history (`data/query_history.json`), Automated benchmark test suite (`src/ai/evaluation.py`)
 - **Testing**: PyTest, FastAPI TestClient (`httpx`)
 - **DevOps / Infra**: Docker, GitHub Actions, Terraform (placeholder)
 
@@ -76,7 +88,7 @@ Local SentenceTransformers (all-MiniLM-L6-v2)
 ```
 bmw-capstone-usecase/
 ├── README.md                          # Comprehensive Project Guide
-├── app.py                             # Streamlit Frontend UI
+├── app.py                             # Streamlit Multi-Tab Frontend UI
 ├── requirements.txt                   # Dependency Specification
 ├── Dockerfile                         # Backend Container Build Specification
 ├── .env.example                       # Environment Configuration Template
@@ -91,33 +103,31 @@ bmw-capstone-usecase/
 │   │   ├── sample_ev_battery_service.txt
 │   │   ├── sample_thermal_management.txt
 │   │   └── sample_charging_system.txt
+│   ├── uploads/                       # User Uploaded Documents
+│   ├── query_history.json             # Local Diagnostic Query History Log
 │   └── vectorstore/                   # Persistent FAISS Index Files (gitignored)
 ├── src/
-│   ├── __init__.py
 │   ├── ingestion/
-│   │   ├── __init__.py
 │   │   ├── document_loader.py        # PDF, TXT, DOCX, CSV Loaders
-│   │   └── ingest.py                 # Pipeline Ingestion Coordinator
+│   │   └── ingest.py                 # Ingestion Pipeline Coordinator
 │   ├── processing/
-│   │   ├── __init__.py
 │   │   ├── text_cleaner.py           # Whitespace & Line Normalizer
 │   │   └── chunker.py                # Recursive Text Chunker with Metadata
 │   ├── ai/
-│   │   ├── __init__.py
 │   │   ├── embeddings.py             # Local HuggingFace Embeddings
-│   │   ├── vector_store.py           # FAISS Storage & Similarity Search
-│   │   ├── retriever.py              # Relevant Chunk Retriever & Filter
+│   │   ├── vector_store.py           # FAISS Storage, Deduplication & Deletion
+│   │   ├── retriever.py              # Deduplicated Chunk Retriever & Filter
 │   │   ├── llm.py                    # Ollama LLM Connection
-│   │   └── rag.py                    # Grounded RAG Pipeline Orchestrator
+│   │   ├── rag.py                    # Grounded RAG Pipeline Orchestrator
+│   │   └── evaluation.py             # Automated RAG Benchmark Suite
 │   ├── api/
-│   │   ├── __init__.py
 │   │   ├── main.py                   # FastAPI Application Entrypoint
 │   │   ├── models.py                 # Pydantic Schemas
-│   │   └── routes.py                 # REST API Endpoints (/health, /ingest, /query, /documents)
+│   │   └── routes.py                 # REST API Endpoints (/health, /ingest, /query, /documents, /history, /evaluate)
 │   └── utils/
-│       ├── __init__.py
 │       ├── config.py                 # Application Settings
-│       └── logging_config.py         # Standard Logger Setup
+│       ├── logging_config.py         # Standard Logger Setup
+│       └── history.py                # Local Query History Manager
 ├── sql/
 │   └── README.md                      # Relational Metadata Storage Notes
 ├── terraform/
@@ -125,8 +135,7 @@ bmw-capstone-usecase/
 ├── .github/
 │   └── workflows/
 │       └── tests.yml                  # GitHub Actions CI Workflow
-└── tests/
-    ├── __init__.py
+└── tests/                             # PyTest Test Suite
     ├── test_text_cleaner.py
     ├── test_chunker.py
     ├── test_metadata.py
@@ -134,159 +143,107 @@ bmw-capstone-usecase/
     ├── test_query_validation.py
     ├── test_empty_query.py
     ├── test_rag_prompt.py
-    └── test_retrieval_formatting.py
+    ├── test_retrieval_formatting.py
+    ├── test_source_deduplication.py
+    ├── test_document_deletion.py
+    ├── test_query_history.py
+    ├── test_evaluation.py
+    ├── test_enhanced_health.py
+    └── test_ingestion_formats.py
 ```
 
 ---
 
-## Prerequisites
+## Installation & Setup
 
-Before starting, ensure the following software is installed on your local laptop:
-1. **Python 3.10+**: `python --version`
-2. **Ollama**: Download and install from [ollama.ai](https://ollama.ai)
-3. **Ollama Model**: `qwen2.5:1.5b`
-
----
-
-## Installation
-
-### 1. Clone Repository & Create Virtual Environment
+### 1. Environment & Dependencies
 ```bash
 git clone <repository_url>
 cd bmw-capstone-usecase
 
-# Create virtual environment
+# Create and activate virtual environment
 python -m venv .venv
-```
 
-**Activate virtual environment:**
-- **Windows (PowerShell)**:
-  ```powershell
-  .venv\Scripts\Activate.ps1
-  ```
-- **Linux / macOS**:
-  ```bash
-  source .venv/bin/activate
-  ```
+# Windows (PowerShell):
+.venv\Scripts\activate
 
-### 2. Install Dependencies
-```bash
+# Linux / macOS:
+source .venv/bin/activate
+
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Install & Verify Local LLM (Ollama)
+### 2. Ollama Local LLM Setup
 ```bash
-# Pull lightweight qwen2.5:1.5b model
+# Install Ollama from https://ollama.ai
+# Pull qwen2.5:1.5b model
 ollama pull qwen2.5:1.5b
 
-# Verify Ollama serve status
-ollama list
+# Verify Ollama status
+ollama serve
 ```
 
 ---
 
-## Environment Variables
+## Running the Application
 
-Copy `.env.example` to create your local `.env` file:
-```bash
-cp .env.example .env
-```
-
-Default values in `.env.example`:
-```ini
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:1.5b
-EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
-TOP_K=4
-CHUNK_SIZE=800
-CHUNK_OVERLAP=100
-SIMILARITY_THRESHOLD=0.35
-BACKEND_URL=http://localhost:8000
-```
-
----
-
-## Running the Backend
-
-Start the FastAPI application server using Uvicorn:
+### 1. Start FastAPI Backend
 ```bash
 uvicorn src.api.main:app --reload
 ```
-- **Backend API**: `http://localhost:8000`
-- **Swagger Interactive API Docs**: `http://localhost:8000/docs`
+- API Base URL: `http://localhost:8000`
+- Swagger UI Docs: `http://localhost:8000/docs`
 
----
-
-## Running Streamlit Frontend
-
-In a new terminal window (with `.venv` active):
+### 2. Start Streamlit Frontend UI
 ```bash
 streamlit run app.py
 ```
-- **Streamlit Web Application**: `http://localhost:8501`
+- Web App URL: `http://localhost:8501`
 
 ---
 
-## Ingesting Documents
+## REST API Endpoints
 
-You can trigger ingestion in two ways:
-1. **Via Streamlit UI**: Click **"Ingest Sample Documents"** in the sidebar, or use the file uploader to index custom PDFs/TXT files.
-2. **Via API**: Send a `POST` request to `http://localhost:8000/ingest` or upload via `POST /upload`.
+- `GET /health`: Structured status for API, FAISS, Embeddings, and Ollama connection.
+- `POST /ingest`: Ingests sample service documents into vector index.
+- `POST /upload`: Uploads and indexes PDF, TXT, DOCX, or CSV files.
+- `POST /query`: Submits question with dynamic `top_k` and `similarity_threshold` parameters.
+- `GET /documents`: Returns indexed documents table data.
+- `DELETE /documents/{filename}`: Deletes document and rebuilds FAISS index.
+- `GET /history`: Returns local technician query history logs.
+- `GET /evaluate`: Executes automated RAG benchmark evaluation test suite.
 
 ---
 
-## Benchmark Example Query & Response
+## Benchmark Example Diagnostic Query
 
 ### Technician Question:
 > *"What should be checked when an EV reports repeated battery overheating?"*
 
-### Expected Grounded Answer:
-> When an electric vehicle reports repeated high-voltage (HV) battery overheating or fault codes 21A004 / 21A008, check the following:
-> 1. **Coolant Circuit & Level**: Inspect fluid level in the secondary expansion reservoir, check coolant pump V54 for speed feedback and cavitation, and perform a 1.5 bar pressure leak test.
-> 2. **Fault Code Readout**: Connect ISTA/D interface to read TMCU and CMC DTCs (21A004 and 21A008).
-> 3. **Temperature Sensor Inspection**: Monitor live values across all 12 internal module NTC sensors. If any module strays >8°C from average, inspect thermal pads.
-> 4. **Heat Exchanger & Valves**: Inspect chiller shut-off valve Y102 and refrigerant expansion valve Y104.
+### Grounded Response:
+> When an electric vehicle reports repeated high-voltage (HV) battery overheating or fault codes 21A004 / 21A008, check:
+> 1. **Coolant Circuit & Level**: Fluid level in expansion reservoir, coolant pump V54 speed feedback, and 1.5 bar leak test.
+> 2. **Fault Code Readout**: Connect ISTA/D to read TMCU and CMC DTCs (21A004 & 21A008).
+> 3. **Temperature Sensors**: Live NTC sensor readings across 12 battery modules.
+> 4. **Chiller & Valves**: Chiller shut-off valve Y102 and refrigerant expansion valve Y104.
 
-### Cited Sources:
-- `sample_ev_battery_service.txt` — Page 1 (Score: 0.88)
+### Deduplicated Sources:
+- `sample_ev_battery_service.txt` — Page 1 (Relevance: 0.88)
 
 ---
 
-## Running Unit & Integration Tests
+## Testing
 
-Run the full pytest suite (all LLM external calls are mocked):
+Run the comprehensive pytest suite (all LLM calls are mocked):
 ```bash
 pytest --verbose
 ```
 
 ---
 
-## Docker Support
+## Limitations & Disclaimer
 
-Build and launch the FastAPI backend in Docker:
-```bash
-# Build Docker image
-docker build -t bmw-rag-backend .
-
-# Run container connecting to host Ollama
-docker run -p 8000:8000 --add-host=host.docker.internal:host-gateway bmw-rag-backend
-```
-
----
-
-## Limitations
-
-- **Synthetic Sample Data**: Included documentation (`data/sample/`) consists of non-copyrighted synthetic procedures created for demonstration purposes.
-- **Lightweight Local LLM**: `qwen2.5:1.5b` is optimized for local developer laptop execution. Complex multi-page reasoning may benefit from larger models (`qwen2.5:7b`).
-- **Demonstration Software**: This project is an educational capstone and not an official replacement for official BMW ISTA diagnostic hardware or service software.
-
----
-
-## Future Enhancements
-
-1. **Re-ranking**: Integrate Cohere or CrossEncoder re-rankers for enhanced precision.
-2. **Hybrid Search**: Combine BM25 keyword search with dense FAISS vectors.
-3. **OCR Integration**: Add Tesseract / Unstructured OCR for scanned legacy PDF wiring diagrams.
-4. **Multilingual Support**: Enable German / English technical term translation.
-5. **Document Versioning & Audit Logs**: Add SQL persistence for technician query logs and manual feedback.
+- **Synthetic Sample Data**: Included files in `data/sample/` consist of non-copyrighted synthetic diagnostic procedures created for demonstration purposes.
+- **Developer Hardware Optimization**: `qwen2.5:1.5b` is lightweight for laptop execution.
+- **Capstone Project**: Educational project; not an official replacement for BMW ISTA hardware or official service documentation.

@@ -9,7 +9,7 @@ logger = setup_logger("document_loader")
 def load_single_document(file_path: Path) -> List[Document]:
     """
     Loads text from a single document file (PDF, TXT, DOCX, CSV)
-    and returns a list of LangChain Document objects with page/source metadata.
+    and returns a list of LangChain Document objects with standardized page/source metadata.
     """
     file_path = Path(file_path)
     if not file_path.exists():
@@ -32,6 +32,8 @@ def load_single_document(file_path: Path) -> List[Document]:
                         doc = Document(
                             page_content=cleaned,
                             metadata={
+                                "document_id": file_name,
+                                "document": file_name,
                                 "source": file_name,
                                 "page": page_num,
                                 "document_type": "PDF"
@@ -49,6 +51,8 @@ def load_single_document(file_path: Path) -> List[Document]:
                 documents.append(Document(
                     page_content=cleaned,
                     metadata={
+                        "document_id": file_name,
+                        "document": file_name,
                         "source": file_name,
                         "page": 1,
                         "document_type": "TXT"
@@ -65,6 +69,8 @@ def load_single_document(file_path: Path) -> List[Document]:
                     documents.append(Document(
                         page_content=cleaned,
                         metadata={
+                            "document_id": file_name,
+                            "document": file_name,
                             "source": file_name,
                             "page": 1,
                             "document_type": "DOCX"
@@ -85,6 +91,8 @@ def load_single_document(file_path: Path) -> List[Document]:
                 documents.append(Document(
                     page_content=cleaned,
                     metadata={
+                        "document_id": file_name,
+                        "document": file_name,
                         "source": file_name,
                         "page": 1,
                         "document_type": "CSV"
