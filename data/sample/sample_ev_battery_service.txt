@@ -1,0 +1,30 @@
+BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL
+Document Code: BMW-EV-BAT-2025-V1
+Classification: Fictional Demonstration Documentation for Capstone RAG
+
+SECTION 1: HIGH-VOLTAGE BATTERY OVERHEATING DIAGNOSIS
+
+1.1 Symptom & Fault Overview
+When an electric vehicle (EV) reports repeated high-voltage (HV) battery overheating alerts or fault code 21A004 / 21A008, technicians must immediately execute a systematic thermal diagnostic workflow before replacing components.
+
+1.2 Recommended Diagnostic Procedures
+When an EV reports repeated battery overheating, perform the following verification and inspection steps:
+1. Coolant Circuit & Level Verification:
+   - Check high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.
+   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.
+   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.
+
+2. Fault Code & Diagnostic Trouble Code (DTC) Readout:
+   - Connect ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).
+   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55°C) and DTC 21A008 (Coolant Flow Rate Deficit).
+
+3. Temperature Sensor & Cell Module Inspection:
+   - Monitor live values for all 12 internal module NTC temperature sensors.
+   - Verify temperature symmetry across modules 1 through 12. If a single module strays by > 8°C from the average, inspect the heat transfer thermal pad interface.
+
+4. Heat Exchanger & Chiller Valve Operations:
+   - Inspect the heat exchanger (chiller) shut-off valve Y102 for binding or electrical failure.
+   - Verify refrigerant expansion valve Y104 operation during active battery cooling mode.
+
+1.3 Safety Notice
+Always de-energize the high-voltage system using the High-Voltage Disconnect Service Plug before servicing cooling line connectors or removing battery module covers.

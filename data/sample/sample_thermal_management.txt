@@ -1,0 +1,21 @@
+BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS
+Document Code: BMW-THM-SPEC-2025-V2
+Classification: Fictional Demonstration Documentation for Capstone RAG
+
+SECTION 2: THERMAL MANAGEMENT SYSTEM CHECKS
+
+2.1 Cooling Circuit Overview
+The thermal management system regulates operating temperatures for the High-Voltage Battery, Electric Drive Motor (eDrive), and Power Electronics (EME).
+
+2.2 Thermal Diagnostic & Inspection Steps
+For thermal management faults and battery cooling performance issues:
+1. Electric Fan Assembly Inspection:
+   - Check dual electric radiator fan stages 1 and 2 via ISTA component triggering test.
+   - Ensure radiator shroud louvers open fully when fan command exceeds 60% duty cycle.
+
+2. Coolant Mixture & Quality Test:
+   - Measure glycol concentration using a refractometer. Specific gravity must correspond to a 50/50 water-glycol protection level down to -37°C.
+   - Test for coolant contamination or air pockets. Perform an automated vacuum bleeding procedure using the BMW cooling system filling equipment.
+
+3. Electric Switch Valves:
+   - Verify 3-way switch valve Y53 (Motor/Battery Heat Swap Valve) changes position correctly during warmup and cooling modes.

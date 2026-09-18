@@ -1,0 +1,20 @@
+BMW CHARGING SYSTEM & COMBINED CHARGING UNIT (CCU) SERVICE GUIDE
+Document Code: BMW-CCU-CHG-2025-V1
+Classification: Fictional Demonstration Documentation for Capstone RAG
+
+SECTION 3: COMBINED CHARGING UNIT (CCU) DIAGNOSTICS
+
+3.1 Charging System Fault Identification
+When an EV displays charging failure warnings or fails to initiate AC/DC fast charging, follow the CCU diagnostic routine.
+
+3.2 Recommended Checks for Charging System Faults:
+1. Charge Socket Actuator & Pin Inspection:
+   - Check the mechanical charging cable locking pin actuator M30. Verify locking pin extends and retracts freely without mechanical binding.
+   - Inspect AC phase pins L1, L2, L3 and DC pins Pos/Neg for heat discoloration, pitting, or corrosion.
+
+2. CP/PP Signal Line Verification:
+   - Measure Control Pilot (CP) signal duty cycle (1kHz PWM signal) and Proximity Pilot (PP) resistance using an oscilloscope.
+   - Verify CP voltage levels: 12V (unplugged), 9V (plugged), 6V (charging request).
+
+3. High-Voltage Insulation Test:
+   - Perform an insulation resistance test on the CCU high-voltage outputs to chassis ground at 1000V DC. Minimum acceptable resistance is 50 M-Ohm.
