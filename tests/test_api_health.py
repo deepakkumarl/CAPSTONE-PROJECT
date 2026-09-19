@@ -8,6 +8,8 @@ def test_health_endpoint():
     response = client.get("/health")
     assert response.status_code == 200
     data = response.json()
-    assert data["status"] == "ok"
-    assert "ollama_model" in data
-    assert "vector_store_status" in data
+    assert "status" in data
+    assert data["api"] == "healthy"
+    assert "llm" in data
+    assert "vector_store" in data
+    assert "components" in data

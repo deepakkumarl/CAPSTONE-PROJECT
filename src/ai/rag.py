@@ -68,18 +68,23 @@ class RAGPipeline:
         logger.info(f"Processing RAG query: '{question}'")
 
         # Step 1 & 2: Retrieval & Relevance Validation
-        docs, sources = self.retriever.retrieve(
-            query=question,
-            top_k=top_k,
-            similarity_threshold=similarity_threshold
-        )
+        if top_k is not None or similarity_threshold is not None:
+            docs, sources = self.retriever.retrieve(
+                query=question,
+                top_k=top_k,
+                similarity_threshold=similarity_threshold
+            )
+        else:
+            docs, sources = self.retriever.retrieve(question)
 
         if not docs:
             logger.info("Retrieval returned no relevant documents above similarity threshold.")
             result = {
                 "question": question,
                 "answer": FALLBACK_RESPONSE,
-                "sources": []
+                "sources": [],
+                "grounding": "INSUFFICIENT",
+                "sources_count": 0
             }
             self.history_manager.add_entry(
                 question=question,
@@ -88,6 +93,9 @@ class RAGPipeline:
                 status="fallback"
             )
             return result
+
+        top_score = max([s.get("score", 0.0) for s in sources]) if sources else 0.0
+        grounding_level = "HIGH" if top_score >= 0.60 else "MEDIUM"
 
         # Step 3: Format context
         context_str = "\n\n---\n\n".join([
@@ -110,7 +118,9 @@ class RAGPipeline:
             result = {
                 "question": question,
                 "answer": clean_answer,
-                "sources": sources
+                "sources": sources,
+                "grounding": grounding_level,
+                "sources_count": len(sources)
             }
 
             self.history_manager.add_entry(
@@ -120,7 +130,7 @@ class RAGPipeline:
                 status="success"
             )
 
-            logger.info("Successfully generated grounded answer from Ollama.")
+            logger.info(f"Successfully generated grounded answer from Ollama (Grounding: {grounding_level}).")
             return result
 
         except Exception as e:
@@ -129,7 +139,9 @@ class RAGPipeline:
             result = {
                 "question": question,
                 "answer": error_answer,
-                "sources": sources
+                "sources": sources,
+                "grounding": "INSUFFICIENT",
+                "sources_count": len(sources)
             }
             self.history_manager.add_entry(
                 question=question,

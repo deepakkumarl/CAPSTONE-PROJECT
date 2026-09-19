@@ -1,5 +1,904 @@
 [
   {
+    "timestamp": "2026-09-19T10:14:17.610413+00:00",
+    "question": "What should be checked for coolant pump?",
+    "answer": "The technician should inspect coolant pump V54 for cavitation noise.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "score": 0.89,
+        "chunk_id": "chunk_1"
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T10:14:17.440460+00:00",
+    "question": "How do I fix unknown fault code X9999?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T10:14:16.885605+00:00",
+    "question": "What is the battery voltage?",
+    "answer": "Error communicating with local LLM (Ollama): Ollama connection refused (http://localhost:11434). Please ensure Ollama is running.",
+    "retrieved_documents": [
+      "test.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "test.txt",
+        "page": 1,
+        "score": 0.85
+      }
+    ],
+    "status": "error"
+  },
+  {
+    "timestamp": "2026-09-19T10:14:07.278074+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_thermal_management.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_936781",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_bbea2e",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_23d8e6",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_91b9fb",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_3a7227",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T10:14:06.296583+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt",
+      "sample_thermal_management.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_7afdbe",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_3fcb4c",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.461,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_94977e",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_936781",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_bbea2e",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T10:09:37.433366+00:00",
+    "question": "What should be checked for coolant pump?",
+    "answer": "The technician should inspect coolant pump V54 for cavitation noise.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "score": 0.89,
+        "chunk_id": "chunk_1"
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T10:09:37.339925+00:00",
+    "question": "How do I fix unknown fault code X9999?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T10:09:37.088849+00:00",
+    "question": "What is the battery voltage?",
+    "answer": "Error communicating with local LLM (Ollama): Ollama connection refused (http://localhost:11434). Please ensure Ollama is running.",
+    "retrieved_documents": [
+      "test.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "test.txt",
+        "page": 1,
+        "score": 0.85
+      }
+    ],
+    "status": "error"
+  },
+  {
+    "timestamp": "2026-09-19T10:09:27.456616+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_thermal_management.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_936781",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_bbea2e",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_23d8e6",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_91b9fb",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_3a7227",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T10:09:26.577774+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt",
+      "sample_thermal_management.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_d48535",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_7feda5",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.461,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_5135f6",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_936781",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_bbea2e",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:58:41.612596+00:00",
+    "question": "What should be checked for coolant pump?",
+    "answer": "The technician should inspect coolant pump V54 for cavitation noise.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "score": 0.89,
+        "chunk_id": "chunk_1"
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:58:40.865733+00:00",
+    "question": "How do I fix unknown fault code X9999?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T09:58:40.395851+00:00",
+    "question": "What is the battery voltage?",
+    "answer": "Error communicating with local LLM (Ollama): Ollama connection refused (http://localhost:11434). Please ensure Ollama is running.",
+    "retrieved_documents": [
+      "test.txt"
+    ],
+    "sources_count": 1,
+    "sources": [
+      {
+        "document": "test.txt",
+        "page": 1,
+        "score": 0.85
+      }
+    ],
+    "status": "error"
+  },
+  {
+    "timestamp": "2026-09-19T09:58:31.371533+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_thermal_management.txt",
+      "sample_charging_system.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_936781",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_bbea2e",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_23d8e6",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_thermal_management.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.387,
+        "chunk_id": "sample_thermal_management.txt_p1_c5_91b9fb",
+        "snippet": "BMW THERMAL MANAGEMENT & COOLING CIRCUIT TECHNICAL SPECIFICATIONS\nDocument Code: BMW-THM-SPEC-2025-V2\nClassification: Fictional Demonstration Document..."
+      },
+      {
+        "document": "sample_charging_system.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3852,
+        "chunk_id": "sample_charging_system.txt_p1_c0_34f5f1",
+        "snippet": "BMW CHARGING SYSTEM & COMBINED CHARGING UNIT (CCU) SERVICE GUIDE\nDocument Code: BMW-CCU-CHG-2025-V1\nClassification: Fictional Demonstration Documentat..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:58:30.186455+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant pump V54.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_f2b29d",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_c49214",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:52:07.419336+00:00",
+    "question": "What is the recommended brake fluid change interval for a bicycle?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T09:52:05.246942+00:00",
+    "question": "How do I reset the oil change service light on a 1995 E36 3-Series?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T09:52:03.099454+00:00",
+    "question": "What checks should be performed on the battery cooling circuit?",
+    "answer": "The checks that should be performed on the battery cooling circuit are:\n\n1. Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n2. Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n3. Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_b0a8c5",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_e62157",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_bc7093",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6027,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6027,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:51:54.002324+00:00",
+    "question": "What are the recommended checks for a charging system fault?",
+    "answer": "The recommended checks for a charging system fault, as per the provided context, include:\n\n1. **Coolant Circuit & Level Verification:**\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. **Fault Code & Diagnostic Trouble Code (DTC) Readout:**\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).\n\nThese checks are recommended when an EV reports repeated battery overheating.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_b0a8c5",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_e62157",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_bc7093",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3678,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3678,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:51:12.754704+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "When an EV reports repeated battery overheating, the following steps should be checked:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_f2b29d",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:50:09.276359+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "When an EV reports repeated battery overheating, the following should be checked:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_f2b29d",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:23:35.987319+00:00",
+    "question": "What is the recommended brake fluid change interval for a bicycle?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T09:23:33.810016+00:00",
+    "question": "How do I reset the oil change service light on a 1995 E36 3-Series?",
+    "answer": "I could not find sufficient information in the available BMW service documentation.",
+    "retrieved_documents": [],
+    "sources_count": 0,
+    "sources": [],
+    "status": "fallback"
+  },
+  {
+    "timestamp": "2026-09-19T09:23:31.658920+00:00",
+    "question": "What checks should be performed on the battery cooling circuit?",
+    "answer": "The checks that should be performed on the battery cooling circuit are:\n\n1. Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n2. Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n3. Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_b0a8c5",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_e62157",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6238,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_bc7093",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6027,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6027,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:23:21.898362+00:00",
+    "question": "What are the recommended checks for a charging system fault?",
+    "answer": "The recommended checks for a charging system fault, as per the provided context, include:\n\n1. **Coolant Circuit & Level Verification:**\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. **Fault Code & Diagnostic Trouble Code (DTC) Readout:**\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).\n\nThese checks are recommended when an EV reports repeated battery overheating.",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_b0a8c5",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_e62157",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3888,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c4_bc7093",
+        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3678,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.3678,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:22:45.216689+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "When an EV reports repeated battery overheating, the following steps should be checked:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_f2b29d",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-09-19T09:21:25.240065+00:00",
+    "question": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "When an EV reports repeated battery overheating, the following should be checked:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
+    "retrieved_documents": [
+      "sample_ev_battery_service.txt"
+    ],
+    "sources_count": 5,
+    "sources": [
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6981,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c3_f2b29d",
+        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      },
+      {
+        "document": "sample_ev_battery_service.txt",
+        "page": 1,
+        "document_type": "TXT",
+        "score": 0.6467,
+        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
+        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
+      }
+    ],
+    "status": "success"
+  },
+  {
     "timestamp": "2026-09-18T08:52:45.068746+00:00",
     "question": "What are the recommended checks for a charging system fault?",
     "answer": "The recommended checks for a charging system fault, as per the provided context, include:\n\n1. Charge Socket Actuator & Pin Inspection:\n   - Check the mechanical charging cable locking pin actuator M30. Verify locking pin extends and retracts freely without mechanical binding.\n   - Inspect AC phase pins L1, L2, L3 and DC pins Pos/Neg for heat discoloration, pitting, or corrosion.\n\n2. CP/PP Signal Line Verification:\n   - Measure Control Pilot (CP) signal duty cycle (1kHz PWM signal) and Proximity Pilot (PP) resistance using an oscilloscope.\n   - Verify CP voltage levels: 12V (unplugged), 9V (plugged), 6V (charging request).\n\n3. High-Voltage Insulation Test:\n   - Perform an insulation resistance test on the CCU high-voltage outputs to chassis ground at 1000V DC. Minimum acceptable resistance is 50 M-Ohm.",
@@ -913,218 +1812,6 @@
         "score": 0.3608,
         "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p4_c7_e374a4",
         "snippet": "2\nReview live temperatures\nCompare sensor values for plausibility.\n3\nInspect cooling circuit\nCheck coolant, flow, leakage, pump response.\n4\nInspect ch..."
-      }
-    ],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-09-18T07:13:49.449462+00:00",
-    "question": "What checks should be performed on the battery cooling circuit?",
-    "answer": "The checks that should be performed on the battery cooling circuit include:\n\n1. Inspect the coolant level and visible leakage.\n2. Check for restricted or interrupted coolant flow.\n3. Verify that the inlet-to-outlet temperature difference is normal.\n4. Inspect the pump operation and commanded response.\n5. Verify the condition of the heat-exchanger or cooling-module.\n6. Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.",
-    "retrieved_documents": [
-      "sample_ev_battery_service.txt",
-      "bmw_ev_service_demo_5_pages.pdf"
-    ],
-    "sources_count": 5,
-    "sources": [
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 2,
-        "document_type": "PDF",
-        "score": 0.7183,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p2_c3_9d3bbc",
-        "snippet": "Check wiring for visible damage or routing issues.\n Compare live values before and after a controlled thermal event.\n6. Cooling Circuit Inspection\nIns..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6238,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c4_b0a8c5",
-        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6238,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c4_e62157",
-        "snippet": "3. Temperature Sensor & Cell Module Inspection:\n - Monitor live values for all 12 internal module NTC temperature sensors.\n - Verify temperature symme..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6027,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6027,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      }
-    ],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-09-18T07:13:18.155650+00:00",
-    "question": "What are the recommended checks for a charging system fault?",
-    "answer": "The recommended checks for a charging system fault include:\n\n1. Charge Socket Actuator & Pin Inspection:\n   - Check the mechanical charging cable locking pin actuator M30. Verify locking pin extends and retracts freely without mechanical binding.\n   - Inspect AC phase pins L1, L2, L3 and DC pins Pos/Neg for heat discoloration, pitting, or corrosion.\n\n2. Applicable Symptoms:\n   - Typical symptoms may include repeated battery-temperature warnings, reduced charging power, charging interruption, cooling-fan operation after shutdown, or a diagnostic message indicating thermal-management limitation.\n\n3. Safety:\n   - High-voltage systems require appropriate training, protective equipment, isolation procedures, and approved measurement equipment. Follow the applicable official service procedure before performing any high-voltage inspection.\n\n4. Diagnostic Principle:\n   - Begin with stored diagnostic fault codes and measured temperature values. Compare sensor readings for plausibility, inspect the cooling circuit, and verify that thermal-management components respond as commanded before proceeding to deeper electrical checks.",
-    "retrieved_documents": [
-      "sample_charging_system.txt",
-      "bmw_ev_service_demo_5_pages.pdf"
-    ],
-    "sources_count": 5,
-    "sources": [
-      {
-        "document": "sample_charging_system.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.5633,
-        "chunk_id": "sample_charging_system.txt_p1_c0_96f3a8",
-        "snippet": "BMW CHARGING SYSTEM & COMBINED CHARGING UNIT (CCU) SERVICE GUIDE\nDocument Code: BMW-CCU-CHG-2025-V1\nClassification: Fictional Demonstration Documentat..."
-      },
-      {
-        "document": "sample_charging_system.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.5633,
-        "chunk_id": "sample_charging_system.txt_p1_c0_3f7a42",
-        "snippet": "BMW CHARGING SYSTEM & COMBINED CHARGING UNIT (CCU) SERVICE GUIDE\nDocument Code: BMW-CCU-CHG-2025-V1\nClassification: Fictional Demonstration Documentat..."
-      },
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 1,
-        "document_type": "PDF",
-        "score": 0.5562,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p1_c1_905cb8",
-        "snippet": "replacement.\n2. Applicable Symptoms\nTypical symptoms may include repeated battery-temperature warnings, reduced charging power,\ncharging interruption,..."
-      },
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 5,
-        "document_type": "PDF",
-        "score": 0.5394,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p5_c9_483761",
-        "snippet": "Repeated thermal warnings require evaluation of sensor plausibility and thermal-management\noperation.\n Cooling-circuit checks include coolant conditio..."
-      },
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 3,
-        "document_type": "PDF",
-        "score": 0.5082,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p3_c4_0b4582",
-        "snippet": "Synthetic BMW-style service documentation \u2014 capstone demonstration only\nPage 3\n Charging System Diagnostic Checks\n7. Charge Socket Inspection\nFor char..."
-      }
-    ],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-09-18T07:12:37.428249+00:00",
-    "question": "What should be checked when an EV reports repeated battery overheating?",
-    "answer": "When an EV reports repeated battery overheating, the following checks should be performed:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
-    "retrieved_documents": [
-      "bmw_ev_service_demo_5_pages.pdf",
-      "sample_ev_battery_service.txt"
-    ],
-    "sources_count": 5,
-    "sources": [
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6981,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6981,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6467,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
-        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6467,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
-        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
-      },
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 5,
-        "document_type": "PDF",
-        "score": 0.6317,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p5_c9_483761",
-        "snippet": "Repeated thermal warnings require evaluation of sensor plausibility and thermal-management\noperation.\n Cooling-circuit checks include coolant conditio..."
-      }
-    ],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-09-18T07:11:44.406402+00:00",
-    "question": "What should be checked when an EV reports repeated battery overheating?",
-    "answer": "When an EV reports repeated battery overheating, the following checks should be performed:\n\n1. Coolant Circuit & Level Verification:\n   - Check the high-voltage battery cooling circuit fluid level in the secondary expansion reservoir.\n   - Inspect the electric coolant pump V54 for proper speed feedback, power supply, and cavitation noise.\n   - Perform a pressure leakage test on the battery cooling loop at 1.5 bar for 15 minutes.\n\n2. Fault Code & Diagnostic Trouble Code (DTC) Readout:\n   - Connect the ISTA/D diagnostic interface and read fault codes from the Thermal Management Control Unit (TMCU) and Cell Monitoring Circuit (CMC).\n   - Check for DTC 21A004 (HV Battery Temperature Exceeds Threshold > 55\u00b0C) and DTC 21A008 (Coolant Flow Rate Deficit).",
-    "retrieved_documents": [
-      "bmw_ev_service_demo_5_pages.pdf",
-      "sample_ev_battery_service.txt"
-    ],
-    "sources_count": 5,
-    "sources": [
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6981,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_baab83",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6981,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c3_571ba1",
-        "snippet": "1.2 Recommended Diagnostic Procedures\nWhen an EV reports repeated battery overheating, perform the following verification and inspection steps:\n1. Coo..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6467,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c2_921691",
-        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
-      },
-      {
-        "document": "sample_ev_battery_service.txt",
-        "page": 1,
-        "document_type": "TXT",
-        "score": 0.6467,
-        "chunk_id": "sample_ev_battery_service.txt_p1_c2_81a5a4",
-        "snippet": "BMW EV HIGH-VOLTAGE BATTERY DIAGNOSTIC & SERVICE MANUAL\nDocument Code: BMW-EV-BAT-2025-V1\nClassification: Fictional Demonstration Documentation for Ca..."
-      },
-      {
-        "document": "bmw_ev_service_demo_5_pages.pdf",
-        "page": 5,
-        "document_type": "PDF",
-        "score": 0.6317,
-        "chunk_id": "bmw_ev_service_demo_5_pages.pdf_p5_c9_483761",
-        "snippet": "Repeated thermal warnings require evaluation of sensor plausibility and thermal-management\noperation.\n Cooling-circuit checks include coolant conditio..."
       }
     ],
     "status": "success"

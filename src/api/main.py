@@ -38,4 +38,5 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("src.api.main:app", host="0.0.0.0", port=8000, reload=True)
+    # 0.0.0.0 binding is required for Docker multi-container networking
+    uvicorn.run("src.api.main:app", host="0.0.0.0", port=8000, reload=True)  # nosec B104

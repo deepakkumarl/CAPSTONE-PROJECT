@@ -105,23 +105,27 @@ with st.sidebar:
     # SYSTEM STATUS
     st.subheader("SYSTEM STATUS")
     if backend_online:
-        st.markdown("• **FastAPI**: <span class='badge-status-online'>Online</span>", unsafe_allow_html=True)
+        st.markdown("• **API**: 🟢")
         v_status = health_data.get("vector_store", "no_index")
-        v_badge = "Online" if v_status == "ready" else "Empty / Not Ingested"
-        v_color = "badge-status-online" if v_status == "ready" else "badge-status-offline"
-        st.markdown(f"• **FAISS**: <span class='{v_color}'>{v_badge}</span>", unsafe_allow_html=True)
+        v_symbol = "🟢" if v_status == "ready" else "🔴"
+        st.markdown(f"• **FAISS**: {v_symbol} (`{v_status}`)")
 
         e_status = health_data.get("embeddings", "ready")
-        st.markdown(f"• **Embeddings**: <span class='badge-status-online'>{e_status.capitalize()}</span>", unsafe_allow_html=True)
+        e_symbol = "🟢" if e_status == "ready" else "🔴"
+        st.markdown(f"• **Embeddings**: {e_symbol}")
 
         o_status = health_data.get("ollama", "disconnected")
-        o_color = "badge-status-online" if o_status == "connected" else "badge-status-offline"
-        st.markdown(f"• **Ollama**: <span class='{o_color}'>{o_status.capitalize()}</span>", unsafe_allow_html=True)
+        o_symbol = "🟢" if o_status == "connected" else "🔴"
+        st.markdown(f"• **Ollama**: {o_symbol} (`{o_status}`)")
 
-        st.markdown(f"• **LLM**: `{health_data.get('llm', 'qwen2.5:1.5b')}`")
+        st.markdown(f"• **LLM**: 🟢 `{health_data.get('llm', 'qwen2.5:1.5b')}`")
     else:
-        st.markdown("• **FastAPI**: <span class='badge-status-offline'>Offline</span>", unsafe_allow_html=True)
-        st.caption(f"Cannot connect to `{BACKEND_URL}`")
+        st.markdown("• **API**: 🔴")
+        st.markdown("• **FAISS**: 🔴")
+        st.markdown("• **Embeddings**: 🔴")
+        st.markdown("• **Ollama**: 🔴")
+        st.markdown("• **LLM**: 🔴")
+        st.caption(f"Cannot connect to backend `{BACKEND_URL}`")
 
     st.divider()
 
@@ -220,23 +224,56 @@ with tab_chat:
     st.write("---")
 
     # Render Chat History
-    for msg in st.session_state.messages:
+    for m_idx, msg in enumerate(st.session_state.messages):
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
+            if msg["role"] == "assistant":
+                grounding_val = msg.get("grounding", "HIGH")
+                sources_cnt = len(msg.get("sources", []))
+                g_color = "🟢" if grounding_val == "HIGH" else ("🟡" if grounding_val == "MEDIUM" else "🔴")
+                st.caption(f"**Grounding**: {g_color} `{grounding_val}` | **Sources**: `{sources_cnt}`")
+
             if "sources" in msg and msg["sources"]:
                 st.markdown("#### 📚 Supporting Sources")
                 for idx, src in enumerate(msg["sources"], start=1):
                     doc_name = src.get("document", "Unknown")
                     page_num = src.get("page", 1)
                     score = src.get("score", 0.0)
+                    doc_type = src.get("document_type", "TXT")
                     score_html = f'<span class="badge-score">Relevance: {score:.2f}</span>'
 
                     with st.expander(f"Source {idx}: {doc_name} — Page {page_num}", expanded=False):
-                        st.markdown(f"**Document**: `{doc_name}` | **Page**: `{page_num}` {score_html}", unsafe_allow_html=True)
+                        st.markdown(f"**Document**: `{doc_name}` | **Type**: `{doc_type}` | **Page**: `{page_num}` {score_html}", unsafe_allow_html=True)
                         if debug_retrieval_mode:
-                            st.caption(f"Chunk ID: `{src.get('chunk_id')}` | Format: `{src.get('document_type')}`")
+                            st.caption(f"Chunk ID: `{src.get('chunk_id')}`")
                             if src.get("snippet"):
                                 st.caption(f"Snippet: {src.get('snippet')}")
+
+            if msg["role"] == "assistant" and backend_online and "sources" in msg:
+                # Feedback widget
+                fb_key = f"fb_{m_idx}"
+                col_f1, col_f2, col_f3 = st.columns([1, 1, 8])
+                if col_f1.button("👍", key=f"up_{fb_key}", help="Was this answer helpful?"):
+                    try:
+                        requests.post(f"{BACKEND_URL}/feedback", json={
+                            "query": st.session_state.messages[m_idx - 1]["content"] if m_idx > 0 else "Query",
+                            "answer": msg["content"],
+                            "helpful": True
+                        }, timeout=3)
+                        st.toast("Thank you for your feedback! 👍")
+                    except Exception:
+                        pass
+                if col_f2.button("👎", key=f"down_{fb_key}", help="Was this answer unhelpful?"):
+                    try:
+                        requests.post(f"{BACKEND_URL}/feedback", json={
+                            "query": st.session_state.messages[m_idx - 1]["content"] if m_idx > 0 else "Query",
+                            "answer": msg["content"],
+                            "helpful": False,
+                            "reason": "Needs improvement"
+                        }, timeout=3)
+                        st.toast("Feedback recorded! 👎")
+                    except Exception:
+                        pass
 
     # Chat Input Box
     default_text = st.session_state.preset_input
@@ -272,8 +309,11 @@ with tab_chat:
                             data = res.json()
                             answer = data.get("answer", "")
                             sources = data.get("sources", [])
+                            grounding_val = data.get("grounding", "HIGH")
 
                             st.markdown(answer)
+                            g_color = "🟢" if grounding_val == "HIGH" else ("🟡" if grounding_val == "MEDIUM" else "🔴")
+                            st.caption(f"**Grounding**: {g_color} `{grounding_val}` | **Sources**: `{len(sources)}`")
 
                             if sources:
                                 st.markdown("#### 📚 Supporting Sources")
@@ -281,19 +321,21 @@ with tab_chat:
                                     doc_name = src.get("document", "Unknown")
                                     page_num = src.get("page", 1)
                                     score = src.get("score", 0.0)
+                                    doc_type = src.get("document_type", "TXT")
                                     score_html = f'<span class="badge-score">Relevance: {score:.2f}</span>'
 
                                     with st.expander(f"Source {idx}: {doc_name} — Page {page_num}", expanded=True):
-                                        st.markdown(f"**Document**: `{doc_name}` | **Page**: `{page_num}` {score_html}", unsafe_allow_html=True)
+                                        st.markdown(f"**Document**: `{doc_name}` | **Type**: `{doc_type}` | **Page**: `{page_num}` {score_html}", unsafe_allow_html=True)
                                         if debug_retrieval_mode:
-                                            st.caption(f"Chunk ID: `{src.get('chunk_id')}` | Format: `{src.get('document_type')}`")
+                                            st.caption(f"Chunk ID: `{src.get('chunk_id')}`")
                                             if src.get("snippet"):
                                                 st.caption(f"Snippet: {src.get('snippet')}")
 
                             st.session_state.messages.append({
                                 "role": "assistant",
                                 "content": answer,
-                                "sources": sources
+                                "sources": sources,
+                                "grounding": grounding_val
                             })
                         else:
                             err_text = f"Server error: {res.json().get('detail', 'Unknown error')}"

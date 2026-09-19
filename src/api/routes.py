@@ -14,14 +14,16 @@ from src.api.models import (
     EvaluationReport,
     BenchmarkDatasetResponse,
     TestCaseRequest,
-    TestCaseResult
+    TestCaseResult,
+    FeedbackRequest,
+    FeedbackResponse
 )
 from src.ingestion.ingest import IngestionPipeline
 from src.ai.vector_store import VectorStoreManager
 from src.ai.retriever import ServiceKnowledgeRetriever
 from src.ai.rag import RAGPipeline
 from src.ai.evaluation import BENCHMARK_DATASET, evaluate_single_test_case, run_rag_evaluation
-from src.utils.history import QueryHistoryManager
+from src.utils.history import QueryHistoryManager, FeedbackManager
 from src.utils.config import settings
 from src.utils.logging_config import setup_logger
 
@@ -35,6 +37,7 @@ ingestion_pipeline = IngestionPipeline(vector_store_manager=vector_store_manager
 _shared_retriever = ServiceKnowledgeRetriever(vector_store_manager=vector_store_manager)
 rag_pipeline = RAGPipeline(retriever=_shared_retriever)
 history_manager = QueryHistoryManager()
+feedback_manager = FeedbackManager()
 
 
 @router.get("/health", response_model=HealthResponse, summary="Enhanced Health & Component Monitoring")
@@ -55,6 +58,16 @@ def health_check():
     except Exception:
         ollama_status = "disconnected"
 
+    components = {
+        "api": "healthy",
+        "vector_store": "healthy" if vector_status == "ready" else "no_index",
+        "embeddings": embeddings_status,
+        "ollama": "healthy" if ollama_status == "connected" else "disconnected",
+        "llm": settings.OLLAMA_MODEL
+    }
+
+    overall_status = "healthy" if ollama_status == "connected" and vector_status == "ready" else "degraded"
+
     return HealthResponse(
         status="ok",
         api="healthy",
@@ -63,7 +76,8 @@ def health_check():
         ollama=ollama_status,
         llm=settings.OLLAMA_MODEL,
         documents_count=docs_count,
-        chunks_count=chunks_count
+        chunks_count=chunks_count,
+        components=components
     )
 
 
@@ -88,11 +102,19 @@ def ingest_documents():
 
 @router.post("/upload", response_model=IngestResponse, summary="Upload & Ingest Multi-Format Document")
 async def upload_document(file: UploadFile = File(...)):
-    """Uploads a PDF, TXT, DOCX, or CSV document, saves it to data/uploads, and indexes it."""
+    """Uploads a PDF, TXT, DOCX, or CSV document safely, saves it to data/uploads, and indexes it."""
     allowed_extensions = {".pdf", ".txt", ".docx", ".csv"}
-    filename = file.filename
-    ext = Path(filename).suffix.lower()
+    filename = file.filename or ""
 
+    # Path traversal prevention & filename sanitization
+    safe_name = Path(filename).name
+    if not safe_name or safe_name != filename or ".." in filename or "/" in filename or "\\" in filename:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or malicious filename provided."
+        )
+
+    ext = Path(safe_name).suffix.lower()
     if ext not in allowed_extensions:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -100,14 +122,25 @@ async def upload_document(file: UploadFile = File(...)):
         )
 
     try:
-        safe_name = Path(filename).name
-        target_path = settings.DATA_UPLOAD_DIR / safe_name
+        content = await file.read()
+        max_bytes = 10 * 1024 * 1024  # 10 MB limit
+        if len(content) > max_bytes:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="File size exceeds maximum allowed limit of 10MB."
+            )
 
+        if len(content) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Uploaded file is empty."
+            )
+
+        target_path = settings.DATA_UPLOAD_DIR / safe_name
         with open(target_path, "wb") as f:
-            content = await file.read()
             f.write(content)
 
-        logger.info(f"Saved uploaded file to {target_path}")
+        logger.info(f"Saved uploaded file to {target_path} ({len(content)} bytes)")
 
         result = ingestion_pipeline.ingest_single_file(target_path)
         return IngestResponse(
@@ -116,6 +149,8 @@ async def upload_document(file: UploadFile = File(...)):
             documents_count=1,
             chunks_count=result.get("chunks_count", 0)
         )
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error handling upload for {filename}: {e}")
         raise HTTPException(
@@ -143,13 +178,38 @@ def query_rag(request: QueryRequest):
         return QueryResponse(
             question=response["question"],
             answer=response["answer"],
-            sources=response["sources"]
+            sources=response["sources"],
+            grounding=response.get("grounding", "HIGH"),
+            sources_count=response.get("sources_count", len(response["sources"]))
         )
     except Exception as e:
         logger.error(f"Query processing error: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error executing RAG query: {str(e)}"
+        )
+
+
+@router.post("/feedback", response_model=FeedbackResponse, summary="Submit User Feedback on RAG Answer")
+def submit_feedback(request: FeedbackRequest):
+    """Records technician user feedback (thumbs up/down) for an answer."""
+    try:
+        feedback_manager.add_feedback(
+            query=request.query,
+            answer=request.answer,
+            helpful=request.helpful,
+            reason=request.reason,
+            comments=request.comments
+        )
+        return FeedbackResponse(
+            status="success",
+            message="Feedback recorded successfully."
+        )
+    except Exception as e:
+        logger.error(f"Error submitting feedback: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to record feedback: {str(e)}"
         )
 
 

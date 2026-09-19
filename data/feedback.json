@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2026-09-19T10:14:07.657490+00:00",
+    "query": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant flow and temp sensors.",
+    "helpful": true,
+    "reason": "Accurate details",
+    "comments": "Very clear instructions."
+  },
+  {
+    "timestamp": "2026-09-19T10:09:27.753837+00:00",
+    "query": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant flow and temp sensors.",
+    "helpful": true,
+    "reason": "Accurate details",
+    "comments": "Very clear instructions."
+  },
+  {
+    "timestamp": "2026-09-19T09:58:31.945802+00:00",
+    "query": "What should be checked when an EV reports repeated battery overheating?",
+    "answer": "Check coolant flow and temp sensors.",
+    "helpful": true,
+    "reason": "Accurate details",
+    "comments": "Very clear instructions."
+  }
+]

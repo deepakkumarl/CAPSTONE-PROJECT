@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 
 class HealthResponse(BaseModel):
-    status: str = Field(..., example="ok")
+    status: str = Field(..., example="healthy")
     api: str = Field(..., example="healthy")
     vector_store: str = Field(..., example="ready")
     embeddings: str = Field(..., example="ready")
@@ -10,6 +10,7 @@ class HealthResponse(BaseModel):
     llm: str = Field(..., example="qwen2.5:1.5b")
     documents_count: int = Field(..., example=3)
     chunks_count: int = Field(..., example=12)
+    components: Optional[Dict[str, str]] = Field(None, example={"api": "healthy", "vector_store": "healthy", "embeddings": "healthy", "ollama": "healthy", "llm": "healthy"})
 
 class QueryRequest(BaseModel):
     question: str = Field(
@@ -32,6 +33,19 @@ class QueryResponse(BaseModel):
     question: str
     answer: str
     sources: List[SourceMetadata]
+    grounding: Optional[str] = Field("HIGH", example="HIGH")
+    sources_count: Optional[int] = Field(0)
+
+class FeedbackRequest(BaseModel):
+    query: str = Field(..., example="What should be checked when an EV reports repeated battery overheating?")
+    answer: str = Field(..., example="The thermal management system...")
+    helpful: bool = Field(..., example=True)
+    reason: Optional[str] = Field(None, example="Missing information")
+    comments: Optional[str] = Field(None, example="Details were helpful")
+
+class FeedbackResponse(BaseModel):
+    status: str = Field(..., example="success")
+    message: str = Field(..., example="Feedback recorded successfully")
 
 class IngestResponse(BaseModel):
     status: str

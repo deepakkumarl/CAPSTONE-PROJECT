@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     DATA_SAMPLE_DIR: Path = BASE_DIR / os.getenv("DATA_SAMPLE_DIR", "data/sample")
     DATA_UPLOAD_DIR: Path = BASE_DIR / os.getenv("DATA_UPLOAD_DIR", "data/uploads")
     HISTORY_FILE_PATH: Path = BASE_DIR / os.getenv("HISTORY_FILE_PATH", "data/query_history.json")
+    FEEDBACK_FILE_PATH: Path = BASE_DIR / os.getenv("FEEDBACK_FILE_PATH", "data/feedback.json")
 
     class Config:
         env_file = ".env"
