@@ -2,9 +2,9 @@ name: BMW RAG Capstone CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   test-and-quality:
@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Deep fetch for SonarQube blame info
+          fetch-depth: 0
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Security Analysis (Bandit)
         run: |
-          bandit -r src -ll -ii || true
+          bandit -r src -ll -ii
 
       - name: Run Pytest & Generate Coverage Report
         env:
@@ -44,12 +44,11 @@ jobs:
         run: |
           pytest --cov=src --cov-report=term-missing --cov-report=xml
 
-      - name: SonarCloud / SonarQube Scan
-        uses: SonarSource/sonarcloud-github-action@v2.0.0
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        continue-on-error: true
+          SONAR_HOST_URL: https://sonarcloud.io
 
       - name: Build Docker Image
         run: |
