@@ -59,7 +59,10 @@ def create_architecture_diagram():
 
     output_path = Path(__file__).parent / "architecture.png"
     img.save(output_path)
-    print(f"Architecture diagram generated at: {output_path}")
+    static_path = Path(__file__).parent / "source" / "_static" / "architecture.png"
+    static_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(static_path)
+    print(f"Architecture diagram generated at: {output_path} and {static_path}")
 
 if __name__ == "__main__":
     create_architecture_diagram()

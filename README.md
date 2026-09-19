@@ -15,6 +15,36 @@ The **BMW Service Knowledge RAG** platform provides automotive service technicia
 
 ---
 
+## 📚 Professional Sphinx Documentation Site
+The project includes an enterprise-grade Sphinx documentation website powered by the **Furo** theme and **MyST Parser**.
+
+### Building & Viewing Documentation Locally
+```bash
+# Install documentation dependencies
+pip install -r docs/requirements-docs.txt
+
+# Build HTML documentation using Sphinx
+sphinx-build -b html docs/source docs/build/html
+```
+
+After building, open `docs/build/html/index.html` in your web browser.
+
+### Documentation Navigation Overview
+- **Home**: Project overview, key capabilities, architecture diagram, badges, and quick start.
+- **Getting Started**: Installation, environment configuration, and server execution.
+- **Architecture**: System components, RAG pipeline execution, data flows, and FAISS vector store.
+- **User Guide**: Streamlit multi-tab portal instructions, document upload, querying, and deletion.
+- **API Reference**: REST API specifications for `/health`, `/upload`, `/ingest`, `/query`, `/documents`, `/feedback`.
+- **RAG & AI**: Document processing, chunking, embeddings, retrieval algorithms, grounding, and LLM prompt templates.
+- **Data & Storage**: Data dictionary, metadata schemas, FAISS spec, and JSON persistence.
+- **Testing & Evaluation**: Pytest strategy, test coverage reporting, and evaluation benchmark.
+- **Security**: Path traversal prevention, file upload controls, and Bandit AST security analysis.
+- **CI/CD**: GitHub Actions pipeline, Flake8, SonarCloud, Docker, and Docker Hub deployment.
+- **Monitoring**: Real-time health check matrix and structured audit logging.
+- **Developer Guide**: Codebase structure, local development environment, and contribution guide.
+
+---
+
 ## 2. Business Problem
 Modern BMW vehicles (electric, hybrid, internal combustion) feature intricate technical manuals spanning thousands of pages. Technicians often spend up to 20% of diagnostic time locating accurate wiring diagrams, sensor voltage limits, or torque specifications. Generic cloud AI assistants risk hallucinating safety-critical repair steps. This platform eliminates search overhead while guaranteeing strictly grounded answers derived exclusively from verified BMW documentation.
 
